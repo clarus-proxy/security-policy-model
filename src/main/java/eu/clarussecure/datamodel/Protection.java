@@ -9,7 +9,7 @@ import java.util.HashSet;
 public class Protection implements Serializable{
 	
 	private Module module = null;
-	private Set<ProtectionAttributeType> attributeTypes = null;
+	private Set<ProtectionAttributeType> attributeTypes = new HashSet<>();
 
     public Protection() {
         // Default value here.
@@ -29,9 +29,6 @@ public class Protection implements Serializable{
     }
 
 	public Set<ProtectionAttributeType> getAttributeTypes(){
-		if (this.attributeTypes == null)
-			return new HashSet<>();
-
 		return this.attributeTypes;
 	}
 
@@ -40,17 +37,19 @@ public class Protection implements Serializable{
     }
 
 	public void addProtectionAttribute(ProtectionAttributeType attrib){
-		if (this.attributeTypes == null)
-			this.attributeTypes = new HashSet<>();
-
 		// Check if there is a Protection Attrbute for this parameter
-		for(ProtectionAttributeType pa : this.attributeTypes)
-			if(pa.getProtection() == attrib.getProtection())
+		for(ProtectionAttributeType pa : this.attributeTypes){
+			if(pa.getProtection() == attrib.getProtection()){
 				this.attributeTypes.remove(pa); // Remove the old value
-
+            }
+        }
 		// Add the new value
 		this.attributeTypes.add(attrib);
 	}
+
+    public void deleteProtectionAttributeType(ProtectionAttributeType type) {
+        this.attributeTypes.remove(type);
+    }
 
     @Override
     public String toString() {

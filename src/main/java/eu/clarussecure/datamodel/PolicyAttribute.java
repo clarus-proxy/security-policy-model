@@ -10,7 +10,7 @@ public class PolicyAttribute implements Serializable{
 	private AttrType attributeType;
 	private DataType dataType;
 	
-    private boolean canEdit; // This fields could be renamed as "registered"
+    private boolean canEdit; // This field could be renamed as "registered"
 
     public PolicyAttribute() { // This constructor can pose problems
         this.path = "";

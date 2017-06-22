@@ -11,18 +11,18 @@ public class Policy implements Serializable{
 	// The name of the fields MUST match the keys of the Json
 	private int policyId;
 	private String policyName;
-	private Usage dataUsage = null;
-	private Endpoint endpoint = null;
+	private Usage dataUsage;
+	private Endpoint endpoint;
 	private Protection protection;
-	private Set<PolicyAttribute> attributes = null;
+	private Set<PolicyAttribute> attributes;
 
 	public Policy(int id, String name){ // The commented fields might pose some problems
 		this.policyId = id;
 		this.policyName = name;
-        //this.dataUsage = Usage.COMPUTE;
-        //this.endpoint = new Endpoint();
-        //this.protection = new Protection();
-        //this.attributes = new HashSet<>();
+        this.dataUsage = Usage.COMPUTE;
+        this.endpoint = new Endpoint();
+        this.protection = new Protection();
+        this.attributes = new HashSet<>();
 	}
 
 	public int getPolicyID(){
@@ -66,9 +66,6 @@ public class Policy implements Serializable{
 	}
 
 	public Set<PolicyAttribute> getAttributes(){
-		if (this.attributes == null)
-			return new HashSet<>();
-
 		return this.attributes;
 	}
 
@@ -77,16 +74,10 @@ public class Policy implements Serializable{
     }
 
 	public void addAttribute(PolicyAttribute pa){
-		if (this.attributes == null)
-			this.attributes = new HashSet<>();
-
 		this.attributes.add(pa);
 	}
 
     public void deleteAttribute(PolicyAttribute pa) {
-		if(this.attributes == null){
-			return;
-		}
         this.attributes.remove(pa);
     }
 

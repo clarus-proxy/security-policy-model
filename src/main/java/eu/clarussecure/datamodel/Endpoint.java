@@ -4,6 +4,7 @@ import eu.clarussecure.datamodel.types.Protocol;
 import java.io.Serializable;
 
 public class Endpoint implements Serializable{
+    
 	private Protocol protocol;
 	private int port;
 	private String baseUrl;

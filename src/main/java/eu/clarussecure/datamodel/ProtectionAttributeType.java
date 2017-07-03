@@ -8,20 +8,20 @@ public class ProtectionAttributeType implements Serializable {
 
     private ProtectionName protection;
     private AttrType type;
-    private ProtectionAttributeParameter parameter;
+    private ProtectionAttributeParameter parameters; // Name changed as suggested by AKKA
 
     private boolean canEdit;
 
     public ProtectionAttributeType() {
         this.protection = ProtectionName.CLOUDS;
         this.type = AttrType.CONFIDENTIAL;
-        this.parameter = new ProtectionAttributeParameter();
+        this.parameters = new ProtectionAttributeParameter();
     }
 
     public ProtectionAttributeType(ProtectionName name, AttrType type, ProtectionAttributeParameter param) {
         this.protection = name;
         this.type = type;
-        this.parameter = param;
+        this.parameters = param;
     }
 
     public ProtectionName getProtection() {
@@ -40,12 +40,12 @@ public class ProtectionAttributeType implements Serializable {
         this.type = type;
     }
 
-    public ProtectionAttributeParameter getParameter() {
-        return parameter;
+    public ProtectionAttributeParameter getParameters() {
+        return parameters;
     }
 
-    public void setParameter(ProtectionAttributeParameter parameter) {
-        this.parameter = parameter;
+    public void setParameters(ProtectionAttributeParameter parameters) {
+        this.parameters = parameters;
     }
 
     public boolean isCanEdit() {

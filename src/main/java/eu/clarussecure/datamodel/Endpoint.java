@@ -7,19 +7,21 @@ public class Endpoint implements Serializable{
     
 	private Protocol protocol;
 	private int port;
-	private String baseUrl;
+    // BaseURL was deleted from this structure
+    // The lines related with this attibute were commented (getters and setters included)
+	//private String baseUrl;
 
     public Endpoint() { // This default constructor might pose some problems.
         // Default value here.
         this.protocol = Protocol.HTTP;
         this.port = 0;
-        this.baseUrl = "";
+        //this.baseUrl = "";
     }
 
 	public Endpoint(Protocol proto, int p, String url){
 		this.protocol = proto;
 		this.port = p;
-		this.baseUrl = url;
+		//this.baseUrl = url;
 	}
 
 	public Protocol getProtocol(){
@@ -38,6 +40,7 @@ public class Endpoint implements Serializable{
         this.port = port;
     }
 
+    /*
 	public String getBaseUrl(){
 		return this.baseUrl;
 	}
@@ -45,14 +48,15 @@ public class Endpoint implements Serializable{
     public void setBaseUrl(String baseUrl) {
         this.baseUrl = baseUrl;
     }
+    */
 	
 	public String getEndpointURL(){
-		return this.protocol.getProtocolScheme() + "://" + "host_name:" + this.port + "/" + this.baseUrl;
+		return this.protocol.getProtocolScheme() + "://" + "host_name:" + this.port + "/";// + this.baseUrl;
 	}
 
     @Override
     public String toString() {
-        String s = "endpoint: protocol: " + this.getProtocol() + ", port: " + this.getPort() + ", base URL: " + this.getBaseUrl();
+        String s = "endpoint: protocol: " + this.getProtocol() + ", port: " + this.getPort();// + ", base URL: " + this.getBaseUrl();
         return s;
     }
 }

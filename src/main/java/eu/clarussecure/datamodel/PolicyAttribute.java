@@ -4,12 +4,12 @@ import eu.clarussecure.datamodel.types.AttrType;
 import eu.clarussecure.datamodel.types.DataType;
 import java.io.Serializable;
 
-public class PolicyAttribute implements Serializable{
-	
-	private String path;
-	private AttrType attributeType;
-	private DataType dataType;
-	
+public class PolicyAttribute implements Serializable {
+
+    private String path;
+    private AttrType attributeType;
+    private DataType dataType;
+
     private boolean canEdit; // This field could be renamed as "registered"
 
     public PolicyAttribute() { // This constructor can pose problems
@@ -19,28 +19,28 @@ public class PolicyAttribute implements Serializable{
         this.canEdit = false;
     }
 
-	public PolicyAttribute(String path, AttrType type, DataType dtype){
-		this.path = path;
-		this.attributeType = type;
-		this.dataType = dtype;
+    public PolicyAttribute(String path, AttrType type, DataType dtype) {
+        this.path = path;
+        this.attributeType = type;
+        this.dataType = dtype;
         this.canEdit = false;
-	}
+    }
 
-	public String getPath(){
-		return this.path;
-	}
+    public String getPath() {
+        return this.path;
+    }
 
     public void setPath(String path) {
         this.path = path;
     }
 
-	public AttrType getAttributeType(){
-		return this.attributeType;
-	}
+    public AttrType getAttributeType() {
+        return this.attributeType;
+    }
 
-	public void setAttributeType(AttrType type){
-		this.attributeType = type;
-	}
+    public void setAttributeType(AttrType type) {
+        this.attributeType = type;
+    }
 
     public DataType getDataType() {
         return this.dataType;

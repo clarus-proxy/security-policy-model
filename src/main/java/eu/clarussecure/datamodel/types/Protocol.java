@@ -1,46 +1,93 @@
 package eu.clarussecure.datamodel.types;
 
-import com.google.gson.annotations.SerializedName;
+import eu.clarussecure.datamodel.types.utils.TypesDAO;
+import java.util.Set;
+import java.util.Arrays;
+import java.util.Map;
 
-public enum Protocol{
-	// FIXME - Add new protocol schemes here to extend the support
-	// Format: ENUM-NAME(protocolName, protocolScheme)
-	// protocolScheme is used to form the final URL later
-	// protocolName is required for obtaining the value from a string given by the user
-	@SerializedName("postgresql")
-	POSTGRESQL("postgresql", "postgresql"),
-	@SerializedName("mysql")
-	MYSQL("mysql", "mysql"),
-	@SerializedName("http")
-	HTTP("http", "http"),
-	@SerializedName("https")
-	HTTPS("https", "https"),
-	@SerializedName("wfs")
-	WFS("wfs", "http");
+public class Protocol {
+    // FIXME - Add new protocol schemes here to extend the support
+    // Format: ENUM-NAME(protocolName, protocolScheme)
+    // protocolScheme is used to form the final URL later
+    // protocolName is required for obtaining the value from a string given by the user
+    /*
+    @SerializedName("postgresql")
+    POSTGRESQL("postgresql", "postgresql"),
+    @SerializedName("mysql")
+    MYSQL("mysql", "mysql"),
+    @SerializedName("http")
+    HTTP("http", "http"),
+    @SerializedName("https")
+    HTTPS("https", "https"),
+    @SerializedName("wfs")
+    WFS("wfs", "http");
+    */
 
-	private final String protocolScheme;
-	private final String protocolName;
+    private final String protocolScheme;
+    private final String protocolName;
+    // These variables are marked transient to avoid being serialized by gson
+    private static transient Map<String, String> protocols = null;
+    private static transient boolean initialized = false;
 
-	private Protocol(String name, String scheme){
-		this.protocolName = name;
-		this.protocolScheme = scheme;
-	}
+    public Protocol(String name, String scheme) {
+        this.protocolName = name;
+        this.protocolScheme = scheme;
+    }
 
-	public String getProtocolScheme(){
-		return this.protocolScheme;
-	}
-	
-	public String getProtocolName(){
-		return this.protocolName;
-	}
+    public Protocol(String name) {
+        this.protocolName = name;
+        this.protocolScheme = Protocol.protocols.get(name);
+    }
 
-	public static Protocol fromString(String proto) throws IllegalArgumentException{
-		for (Protocol p : Protocol.values()){
-			if (p.getProtocolName().toLowerCase().equals(proto)){
-				return p;
-			}
-		}
+    public String getProtocolScheme() {
+        return this.protocolScheme;
+    }
 
-		throw new IllegalArgumentException();
-	}
+    public String getProtocolName() {
+        return this.protocolName;
+    }
+
+    public static void initialize() {
+        if (Protocol.initialized) {
+            // If the class is already initialized, there's nothing to do
+            return;
+        }
+
+        // Retrieve the list of registered protocols
+        TypesDAO dao = TypesDAO.getInstance();
+        Protocol.protocols = dao.loadProtocolsList();
+        dao.deleteInstance();
+
+        Protocol.initialized = true;
+    }
+
+    public static boolean isValidProtocol(String protocolName) {
+        // This method looks check if the given protocol is valid or not
+        Set<String> protocolNames = Protocol.getProtocolNames();
+
+        for (String p : protocolNames) {
+            if (p.equals(protocolName.toLowerCase())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static Set<String> getProtocolNames() {
+        // Sanity Check
+        if (!Protocol.initialized) {
+            return null;
+        }
+        // Simply return the Key Set of the loaded protocols
+        return Protocol.protocols.keySet();
+    }
+
+    public static String getProtocolNamesAsList() {
+        // Sanity Check
+        if (!Protocol.initialized) {
+            return null;
+        }
+        Set<String> protocols = Protocol.getProtocolNames();
+        return Arrays.toString(protocols.toArray());
+    }
 }

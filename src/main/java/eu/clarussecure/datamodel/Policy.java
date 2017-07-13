@@ -16,13 +16,18 @@ public class Policy implements Serializable {
     private Protection protection;
     private Set<PolicyAttribute> attributes;
 
-    public Policy(int id, String name) { // The commented fields might pose some problems
-        this.policyId = id;
-        this.policyName = name;
+    public Policy() {
+        this.policyId = 0;
+        this.policyName = "";
         this.dataUsage = Usage.COMPUTE;
         this.endpoint = new Endpoint();
         this.protection = new Protection();
         this.attributes = new HashSet<>();
+    }
+
+    public Policy(int id, String name) { // The commented fields might pose some problems
+        this.policyId = id;
+        this.policyName = name;
     }
 
     public int getPolicyID() {
@@ -91,16 +96,19 @@ public class Policy implements Serializable {
     public boolean checkPolicyIntegrity() {
         // This method should check if the policy is completely specified or not.
         // An incomplete policy SHOULD NOT be capable of deploying it
-        boolean valid = false;
+        boolean valid = true;
 
         // A policy must have an Endpoint
-        valid = (this.endpoint != null) && valid;
+        valid = valid && this.endpoint.isValid();
+        System.out.print(valid + "");
 
         // A policy must have a Usage
-        valid = (this.dataUsage != null) && valid;
+        valid = valid && (this.dataUsage != null);
+        System.out.print(valid + "");
 
         // A policy must have an protection module
-        valid = (this.protection.isValid()) && valid;
+        valid = valid && (this.protection.isValid());
+        System.out.print(valid + "");
 
         return valid;
     }

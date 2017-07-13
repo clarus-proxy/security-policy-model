@@ -8,16 +8,6 @@ public class Module {
     // The annotation "SerializedName" is required by Gson to correctly map
     // the name on the Json file with the enum value
 
-    // TODO - Complete this enum to support more CLARUS Security Modules.
-    /*
-    @SerializedName("anonymization")
-    ANONYMIZATION("anonymization"),
-    @SerializedName("splitting")
-    SPLITTING("splitting"),
-    @SerializedName("encryption")
-    ENCRYPTION("encryption");
-    */
-
     private String clarusModuleName;
     // The next variables are marked as transient to avoid being serialized by gson
     private static transient Set<String> installedModules = null;
@@ -26,7 +16,7 @@ public class Module {
     public Module() {
         // NOTE - The invocation assumes the class has been initialized and there's at least 1 module
         // The default value: simply get the first
-        this.clarusModuleName = Module.installedModules.iterator().next();
+        this.clarusModuleName = null;
     }
 
     public Module(String name) {

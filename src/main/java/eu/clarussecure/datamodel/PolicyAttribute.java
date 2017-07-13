@@ -10,7 +10,8 @@ public class PolicyAttribute implements Serializable {
     private AttrType attributeType;
     private DataType dataType;
 
-    private boolean canEdit; // This field could be renamed as "registered"
+    // Attributes marked as transiet WILL NOT be serialized by gson
+    private transient boolean canEdit; // This field could be renamed as "registered"
 
     public PolicyAttribute() { // This constructor can pose problems
         this.path = "";

@@ -68,6 +68,23 @@ public class Endpoint implements Serializable {
     }
     */
 
+    public boolean isValid() {
+        // Validation of the Endpoint structure
+        boolean valid;
+
+        // A valid port must be present
+        valid = this.port > 0;
+
+        // The Endpoint must have a Valid Protocol
+        Protocol.initialize();
+        valid = valid && Protocol.isValidProtocol(this.protocol.getProtocolName());
+
+        for (ProtocolParam param : this.parameters)
+            valid = valid && param.isValid();
+
+        return valid;
+    }
+
     public String getEndpointURL() {
         return this.protocol.getProtocolScheme() + "://" + "host_name:" + this.port + "/";// + this.baseUrl;
     }

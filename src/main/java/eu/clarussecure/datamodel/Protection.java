@@ -13,7 +13,6 @@ public class Protection implements Serializable {
 
     public Protection() {
         // Default value here.
-        Module.initialize();
         this.module = new Module();
     }
 

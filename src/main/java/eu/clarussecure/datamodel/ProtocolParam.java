@@ -37,4 +37,9 @@ public class ProtocolParam implements Serializable {
         // TODO
         throw new UnsupportedOperationException();
     }
+
+    public boolean isValid() {
+        // TODO - Change this behavior when defining correctly how a protocol Parameter must look like
+        return true;
+    }
 }

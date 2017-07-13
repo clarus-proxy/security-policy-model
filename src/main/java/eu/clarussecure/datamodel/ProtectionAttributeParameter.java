@@ -1,27 +1,28 @@
 package eu.clarussecure.datamodel;
 
-import eu.clarussecure.datamodel.types.ProtectionParam;
 import java.io.Serializable;
 
 public class ProtectionAttributeParameter implements Serializable {
 
-    private ProtectionParam param;
+    private String param;
     private double value;
 
     public ProtectionAttributeParameter() {
-        this.param = ProtectionParam.CLOUDSNUMBER;
+        // Dummy constructor with dummy initial values
+        this.param = null;
+        this.value = -1.0;
     }
 
-    public ProtectionAttributeParameter(ProtectionParam param, double value) {
+    public ProtectionAttributeParameter(String param, double value) {
         this.param = param;
         this.value = value;
     }
 
-    public ProtectionParam getParam() {
+    public String getParam() {
         return this.param;
     }
 
-    public void setParam(ProtectionParam param) {
+    public void setParam(String param) {
         this.param = param;
     }
 

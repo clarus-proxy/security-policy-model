@@ -1,34 +1,42 @@
 package eu.clarussecure.datamodel;
 
-import eu.clarussecure.datamodel.types.ProtectionName;
 import eu.clarussecure.datamodel.types.AttrType;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ProtectionAttributeType implements Serializable {
 
-    private ProtectionName protection;
+    private String protection;
     private AttrType type;
-    private ProtectionAttributeParameter parameters; // Name changed as suggested by AKKA
+    private List<ProtectionAttributeParameter> parameters; // Name changed as suggested by AKKA
 
-    private boolean canEdit;
+    // Attributes marked as transiet WILL NOT be serialized by gson
+    private transient boolean canEdit;
 
     public ProtectionAttributeType() {
-        this.protection = ProtectionName.CLOUDS;
+        this.protection = "";
         this.type = AttrType.CONFIDENTIAL;
-        this.parameters = new ProtectionAttributeParameter();
+        this.parameters = new ArrayList<>();
     }
 
-    public ProtectionAttributeType(ProtectionName name, AttrType type, ProtectionAttributeParameter param) {
+    public ProtectionAttributeType(String name, AttrType type, ProtectionAttributeParameter param) {
         this.protection = name;
         this.type = type;
-        this.parameters = param;
+        this.parameters = new ArrayList<>();
+        this.parameters.add(param);
     }
 
-    public ProtectionName getProtection() {
+    public ProtectionAttributeType(String name, AttrType type) {
+        this.protection = name;
+        this.type = type;
+    }
+
+    public String getProtection() {
         return protection;
     }
 
-    public void setProtection(ProtectionName protection) {
+    public void setProtection(String protection) {
         this.protection = protection;
     }
 
@@ -40,12 +48,16 @@ public class ProtectionAttributeType implements Serializable {
         this.type = type;
     }
 
-    public ProtectionAttributeParameter getParameters() {
+    public List<ProtectionAttributeParameter> getParameters() {
         return parameters;
     }
 
-    public void setParameters(ProtectionAttributeParameter parameters) {
+    public void setParameters(List<ProtectionAttributeParameter> parameters) {
         this.parameters = parameters;
+    }
+
+    public void addParameter(ProtectionAttributeParameter parameter) {
+        this.parameters.add(parameter);
     }
 
     public boolean isCanEdit() {

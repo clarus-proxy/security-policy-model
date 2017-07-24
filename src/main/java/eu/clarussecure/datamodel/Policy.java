@@ -16,6 +16,8 @@ public class Policy implements Serializable {
     private Protection protection;
     private Set<PolicyAttribute> attributes;
 
+    private boolean published;
+
     public Policy() {
         this.policyId = 0;
         this.policyName = "";
@@ -30,11 +32,11 @@ public class Policy implements Serializable {
         this.policyName = name;
     }
 
-    public int getPolicyID() {
+    public int getPolicyId() {
         return this.policyId;
     }
 
-    public void setPolicyID(int policyId) {
+    public void setPolicyId(int policyId) {
         this.policyId = policyId;
     }
 
@@ -79,17 +81,17 @@ public class Policy implements Serializable {
     }
 
     public void addAttribute(PolicyAttribute pa) {
-        this.attributes.add(pa);
+        this.getAttributes().add(pa);
     }
 
     public void deleteAttribute(PolicyAttribute pa) {
-        this.attributes.remove(pa);
+        this.getAttributes().remove(pa);
     }
 
     @Override
     public String toString() {
-        String s = "Policy: ID: " + this.policyId + ", name: " + this.policyName + ", " + this.endpoint + ", "
-                + this.protection;
+        String s = "Policy: ID: " + this.getPolicyId() + ", name: " + this.getPolicyName() + ", " + this.getEndpoint()
+                + ", " + this.getProtection();
         return s;
     }
 
@@ -99,17 +101,25 @@ public class Policy implements Serializable {
         boolean valid = true;
 
         // A policy must have an Endpoint
-        valid = valid && this.endpoint.isValid();
+        valid = valid && this.getEndpoint().isValid();
         System.out.print(valid + "");
 
         // A policy must have a Usage
-        valid = valid && (this.dataUsage != null);
+        valid = valid && (this.getDataUsage() != null);
         System.out.print(valid + "");
 
         // A policy must have an protection module
-        valid = valid && (this.protection.isValid());
+        valid = valid && (this.getProtection().isValid());
         System.out.print(valid + "");
 
         return valid;
+    }
+
+    public boolean isPublished() {
+        return this.published;
+    }
+
+    public void setPublished(boolean published) {
+        this.published = published;
     }
 }

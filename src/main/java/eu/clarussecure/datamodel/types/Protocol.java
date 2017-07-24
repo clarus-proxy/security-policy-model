@@ -1,11 +1,12 @@
 package eu.clarussecure.datamodel.types;
 
 import eu.clarussecure.datamodel.types.utils.TypesDAO;
+import java.io.Serializable;
 import java.util.Set;
 import java.util.Arrays;
 import java.util.Map;
 
-public class Protocol {
+public class Protocol implements Serializable {
 
     private final String protocolScheme;
     private final String protocolName;

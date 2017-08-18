@@ -102,15 +102,12 @@ public class Policy implements Serializable {
 
         // A policy must have an Endpoint
         valid = valid && this.getEndpoint().isValid();
-        System.out.print(valid + "");
 
         // A policy must have a Usage
         valid = valid && (this.getDataUsage() != null);
-        System.out.print(valid + "");
 
         // A policy must have an protection module
         valid = valid && (this.getProtection().isValid());
-        System.out.print(valid + "");
 
         return valid;
     }

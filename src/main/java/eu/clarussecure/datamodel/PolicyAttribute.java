@@ -3,6 +3,7 @@ package eu.clarussecure.datamodel;
 import eu.clarussecure.datamodel.types.AttrType;
 import eu.clarussecure.datamodel.types.DataType;
 import java.io.Serializable;
+import org.jdom2.Element;
 
 public class PolicyAttribute implements Serializable {
 
@@ -57,5 +58,15 @@ public class PolicyAttribute implements Serializable {
 
     public void setCanEdit(boolean canEdit) {
         this.canEdit = canEdit;
+    }
+
+    public Element getXMLElement() {
+        // Create the Element
+        Element elem = new Element("attribute");
+        elem.setAttribute("name", this.path);
+        elem.setAttribute("attribute_type", this.attributeType.getAttrName());
+        elem.setAttribute("data_type", this.dataType.getName());
+
+        return elem;
     }
 }

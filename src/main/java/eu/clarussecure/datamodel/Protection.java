@@ -5,6 +5,8 @@ import java.io.Serializable;
 
 import java.util.Set;
 import java.util.HashSet;
+import java.util.stream.Stream;
+import org.jdom2.Element;
 
 public class Protection implements Serializable {
 
@@ -60,5 +62,27 @@ public class Protection implements Serializable {
     public boolean isValid() {
         // TODO - Reimplement this since different CLARUS modules require different Protection Attributes.
         return true;
+    }
+
+    public Element getXMLElement() {
+        // Create the XML Element of this object
+        Element elem = new Element("protection");
+
+        // Add the "module" attribute of this element
+        elem.setAttribute("module", this.module.getClarusModuleName());
+
+        // Get the XML Elements of each attribute type
+        Stream<Element> subelems = this.attributeTypes.stream().map(attribType -> {
+            return attribType.getXMLElement();
+        });
+
+        // Attach the attribute types
+        Element attribTypes = new Element("attribute_types");
+        subelems.forEach(subelem -> attribTypes.addContent(subelem));
+
+        // Attach the attribute types element
+        elem.addContent(attribTypes);
+
+        return elem;
     }
 }

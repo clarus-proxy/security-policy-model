@@ -5,6 +5,8 @@ import java.io.Serializable;
 
 import java.util.Set;
 import java.util.HashSet;
+import java.util.stream.Stream;
+import org.jdom2.Element;
 
 public class Policy implements Serializable {
 
@@ -118,5 +120,30 @@ public class Policy implements Serializable {
 
     public void setPublished(boolean published) {
         this.published = published;
+    }
+
+    public Element getXMLElement() {
+        // Create the Element
+        Element elem = new Element("schema");
+
+        // Get the Attribute Names elements
+        Stream<Element> attribs = this.attributes.stream().map(attrib -> {
+            return attrib.getXMLElement();
+        });
+
+        // Attach the Attribute Names
+        Element elem2 = new Element("data");
+        attribs.forEach(e -> elem2.addContent(e));
+        elem.addContent(elem2);
+
+        // Attach the Protection Module
+        elem.addContent(this.protection.getXMLElement());
+
+        // Attach the Protocol tag
+        Element elem3 = new Element("protocol");
+        elem3.setAttribute("plugin", this.endpoint.getProtocol().getProtocolName());
+        elem.addContent(elem3);
+
+        return null;
     }
 }

@@ -144,6 +144,6 @@ public class Policy implements Serializable {
         elem3.setAttribute("plugin", this.endpoint.getProtocol().getProtocolName());
         elem.addContent(elem3);
 
-        return null;
+        return elem;
     }
 }

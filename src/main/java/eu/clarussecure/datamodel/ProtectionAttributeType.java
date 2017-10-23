@@ -4,6 +4,7 @@ import eu.clarussecure.datamodel.types.AttrType;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import org.jdom2.Element;
 
 public class ProtectionAttributeType implements Serializable {
 
@@ -66,5 +67,23 @@ public class ProtectionAttributeType implements Serializable {
 
     public void setCanEdit(boolean canEdit) {
         this.canEdit = canEdit;
+    }
+
+    public Element getXMLElement() {
+        // Create the Element
+        Element elem = new Element("attribute_type");
+
+        // Add the protection attribute
+        elem.setAttribute("protection", this.protection);
+
+        // Add the type attribute
+        elem.setAttribute("type", this.type.getAttrName());
+
+        // Add any other extra info as attributes
+        this.parameters.stream().forEach(param -> {
+            elem.setAttribute(param.getParam(), param.getValue() + "");
+        });
+
+        return elem;
     }
 }
